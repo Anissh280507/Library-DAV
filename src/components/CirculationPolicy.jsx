@@ -1,13 +1,12 @@
+import React from "react";
 import { BookOpen, Clock, AlertTriangle, RefreshCw, BookMarked, FileText } from "lucide-react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Separator } from "@/components/ui/separator";
 
 const policies = [
   {
     icon: BookOpen,
     title: "Borrowing Privileges",
-    color: "bg-blue-50 text-blue-700",
+    category: "01 / ACCESS",
+    sidebarBg: "bg-blue-100/90 text-blue-800 border-blue-200",
     points: [
       "Students may use the library during their library periods, recess, and after school.",
       "Library access in other periods requires written permission from the subject teacher.",
@@ -16,7 +15,8 @@ const policies = [
   {
     icon: Clock,
     title: "Loan Periods",
-    color: "bg-purple-50 text-purple-700",
+    category: "02 / DURATION",
+    sidebarBg: "bg-purple-100/90 text-purple-800 border-purple-200",
     points: [
       "Class VI–VIII students can issue one book at a time for one week.",
       "General books are issued for seven days.",
@@ -27,7 +27,8 @@ const policies = [
   {
     icon: AlertTriangle,
     title: "Lost & Damaged Books",
-    color: "bg-red-50 text-red-600",
+    category: "03 / LIABILITY",
+    sidebarBg: "bg-rose-100/90 text-rose-800 border-rose-200",
     points: [
       "Check books at the time of issue and report any existing damage immediately.",
       "In case of loss or damage, the student must pay the cost of the book.",
@@ -35,8 +36,9 @@ const policies = [
   },
   {
     icon: RefreshCw,
-    title: "Renewals",
-    color: "bg-green-50 text-green-700",
+    title: "Renewals & Clearances",
+    category: "04 / LIFECYCLE",
+    sidebarBg: "bg-emerald-100/90 text-emerald-800 border-emerald-200",
     points: [
       "The book must be present at the time of renewal.",
       "Books may be renewed only twice.",
@@ -47,7 +49,8 @@ const policies = [
   {
     icon: BookMarked,
     title: "Reference Materials",
-    color: "bg-yellow-50 text-yellow-700",
+    category: "05 / RETENTION",
+    sidebarBg: "bg-amber-100/90 text-amber-900 border-amber-200",
     points: [
       "Encyclopedias, dictionaries & reference materials are for in-library use only and cannot be checked out.",
     ],
@@ -55,7 +58,8 @@ const policies = [
   {
     icon: FileText,
     title: "Policy Review",
-    color: "bg-gray-100 text-gray-600",
+    category: "06 / SYSTEM",
+    sidebarBg: "bg-slate-100 text-slate-800 border-slate-200",
     points: [
       "The circulation policy is reviewed annually and updated as needed.",
     ],
@@ -64,44 +68,54 @@ const policies = [
 
 export default function CirculationPolicy() {
   return (
-    <section className="bg-white py-16 px-4">
-      <div className="max-w-5xl mx-auto">
-        <div className="text-center mb-12">
-          <Badge className="mb-3 bg-blue-100 text-[#1a1a6e] hover:bg-blue-100 text-xs font-semibold px-3 py-1">
-            Library Guidelines
-          </Badge>
-          <h2 className="text-3xl font-extrabold black-900 mt-2">Library Circulation Policy</h2>
-          <Separator className="w-16 mx-auto mt-4 bg-[#1a1a6e] h-0.5" />
-          <p className="text-black-500 mt-4 text-sm max-w-l mx-auto">
-            Rules and guidelines for borrowing, returning, and using library resources at DAV Public School, Airoli.
-          </p>
+    <section className="bg-slate-50 py-24 px-4 sm:px-6 lg:px-8 antialiased">
+      <div className="max-w-6xl mx-auto">
+        
+        {/* Centered Section Header */}
+        <div className="border-b-2 border-black pb-10 mb-16 flex flex-col items-center justify-center text-center">
+          <div className="max-w-2xl mx-auto">
+            <span className="text-sm sm:text-base md:text-xl font-bold uppercase tracking-widest text-black bg-slate-200/70 px-5 py-2.5 rounded-md border border-slate-300/60 inline-block shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
+              DAV Airoli Library Circulation Policy
+            </span>
+          </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-          {policies.map(({ icon: Icon, title, color, points }) => (
-            <Card key={title} className="border border-gray-100 shadow-sm hover:shadow-md transition-shadow rounded-2xl">
-              <CardHeader className="pb-3">
-                <CardTitle className="flex items-center gap-3 text-base font-bold text-gray-900">
-                  <div className={`p-2 rounded-xl ${color.split(" ")[0]}`}>
-                    <Icon size={17} className={color.split(" ")[1]} />
-                  </div>
+        {/* Structural Grid Layout */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          {policies.map(({ icon: Icon, title, category, sidebarBg, points }) => (
+            <div 
+              key={title} 
+              className="bg-white border-2 border-black rounded-xl overflow-hidden flex flex-row min-h-[180px] shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]"
+            >
+              {/* Unique Vertical Sidebar Indicator */}
+              <div className={`w-16 sm:w-20 ${sidebarBg} border-r-2 border-black flex flex-col items-center justify-between py-6 flex-shrink-0`}>
+                <span className="text-[10px] font-black tracking-widest uppercase [writing-mode:vertical-lr] rotate-180 select-none">
+                  {category}
+                </span>
+                <div className="w-8 h-8 rounded-lg bg-white border border-black flex items-center justify-center shadow-[1px_1px_0px_0px_rgba(0,0,0,1)]">
+                  <Icon size={16} strokeWidth={2.5} className="text-black" />
+                </div>
+              </div>
+
+              {/* Main Contents Area */}
+              <div className="flex-1 p-5 sm:p-6 flex flex-col justify-start space-y-4">
+                <h3 className="font-extrabold text-black font-serif text-lg tracking-tight leading-tight border-b border-slate-100 pb-2">
                   {title}
-                </CardTitle>
-              </CardHeader>
-              <Separator />
-              <CardContent className="pt-4">
-                <ul className="flex flex-col gap-2.5">
+                </h3>
+                
+                <ul className="space-y-3 flex-1 flex flex-col justify-start">
                   {points.map((p, i) => (
-                    <li key={i} className="flex items-start gap-2.5 text-sm text-gray-600">
-                      <span className="mt-2 w-1.5 h-1.5 rounded-full bg-[#1a1a6e] flex-shrink-0" />
-                      {p}
+                    <li key={i} className="flex items-start gap-3 text-[14.5px] text-black font-medium font-sans leading-relaxed">
+                      <span className="mt-2 w-2 h-2 border border-black bg-black rounded-none rotate-45 flex-shrink-0" />
+                      <span>{p}</span>
                     </li>
                   ))}
                 </ul>
-              </CardContent>
-            </Card>
+              </div>
+            </div>
           ))}
         </div>
+
       </div>
     </section>
   );
