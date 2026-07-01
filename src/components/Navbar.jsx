@@ -8,7 +8,9 @@ const navLinks = [
   { label: "Resources", to: "/resources" },
   { label: "Faculty",   to: "/faculty" },
   { label: "Events",    to: "/events" },
+  { label: "Donated Books",   to: "/donate" },
   { label: "Contact",   to: "/contact" },
+
 ];
 
 export default function Navbar() {

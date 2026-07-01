@@ -25,6 +25,7 @@ const categories = [
   { id: "reference",   label: "Reference Resources",               icon: Library },
   { id: "ted",         label: "Ted Talks & Documentaries",         icon: Tv },
   { id: "websites",    label: "Useful Websites",                   icon: Globe },
+  
 ];
 
 const placeholderItems = {

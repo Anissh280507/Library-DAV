@@ -12,6 +12,9 @@ import CirculationPolicy from "./components/CirculationPolicy";
 import NewArrivalsSlider from "./components/NewArrivalsSlider";
 import LibraryServices from "./components/LibraryServices";
 
+// Correct import path pointing to the pages directory
+import DonatedBooks from "./pages/DonatedBooks";
+
 function Home() {
   return (
     <>
@@ -19,6 +22,7 @@ function Home() {
       <NewArrivalsSlider />
       <LibraryServices />
       <CirculationPolicy />
+      <DonatedBooks />
     </>
   );
 }
@@ -28,14 +32,20 @@ export default function App() {
     <BrowserRouter>
       <div className="min-h-screen bg-gray-50 flex flex-col">
         <Navbar />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/resources" element={<Resources />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="/faculty" element={<Faculty />} />
-          <Route path="/new-arrivals" element={<NewArrivals />} />
-          <Route path="/events" element={<Events />} />
-        </Routes>
+        <main className="flex-grow">
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/resources" element={<Resources />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/faculty" element={<Faculty />} />
+            <Route path="/new-arrivals" element={<NewArrivals />} />
+            <Route path="/events" element={<Events />} />
+            
+            {/* Added both routes to handle nav links and prevent unmatched location warnings */}
+            <Route path="/donate" element={<DonatedBooks />} />
+            <Route path="/donated-books" element={<DonatedBooks />} />
+          </Routes>
+        </main>
         <Footer />
       </div>
     </BrowserRouter>

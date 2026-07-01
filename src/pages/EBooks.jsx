@@ -9,10 +9,13 @@ const BASE_WL = "https://www.eklavya.in/images/FlipBooks/Wordless/";
 
 const sections = [
   { id: "beginning", label: "Beginning Readers" },
-  { id: "young",     label: "Young Readers" },
-  { id: "teen",      label: "Teen Readers" },
   { id: "religion",  label: "Religion & Spirituality" },
   { id: "children",  label: "Children's Books", externalUrl: "https://drive.google.com/drive/folders/1eXNA2zE5k1XXlCfGDgpbBkjy1ru6GI55" },
+  { id: "Arya Samaj",  label: "आर्य समाज साहित्य", externalUrl: "https://drive.google.com/drive/folders/1-YETplt45U4CycEFLCVvQ0GaEzk7dAs1?usp=sharing" },
+  { id: "English Fiction",  label: "English Fiction", externalUrl: "https://drive.google.com/drive/folders/1z5wH2aKKKonpWn9exLHpTiVsYjSxuG_3?usp=sharing" },
+  { id: "Kids",  label: "Kids Books", externalUrl: "https://drive.google.com/drive/folders/1dmELpyvR6HFeLkBr4NZdWZIU3hhIBsSK?usp=sharing" },
+   { id: "Hindi Fiction",  label: "Hindi Fiction", externalUrl: "https://drive.google.com/drive/folders/1OeWa8apc9nG6RXE9R-c-K5D--JcHGyaG?usp=sharing" },
+  
 ];
 
 const beginningBooks = [
