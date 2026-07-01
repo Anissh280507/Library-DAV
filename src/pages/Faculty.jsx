@@ -196,7 +196,7 @@ export default function Faculty() {
                   className="bg-white rounded-2xl border-2 border-slate-900/10 shadow-sm hover:shadow-md hover:border-[#1d4ed8]/30 transition-all duration-200 p-4 flex flex-col items-center text-center group"
                 >
                   {/* Styled Frame Photo Container */}
-                  <div className="w-35 h-35 rounded-full overflow-hidden bg-slate-100 flex items-center justify-center mb-4 ring-4 ring-slate-50 group-hover:ring-[#1d4ed8]/10 transition-all flex-shrink-0">
+                  <div className="w-20 h-20 rounded-full overflow-hidden bg-slate-100 flex items-center justify-center mb-4 ring-4 ring-slate-50 group-hover:ring-[#1d4ed8]/10 transition-all flex-shrink-0">
                     {person.img ? (
                       <img
                         src={person.img}
