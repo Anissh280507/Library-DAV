@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import heroImg        from "../assets/hero.png";
 import nishaPeshinImg from "../assets/Hero/Nisha Pashin.jpeg";
 import bookCoverImg   from "../assets/Hero/Let them FLy.jpg";
+import bookBackImg    from "../assets/Hero/Let them FLy Back page.jpeg"; // Imported back cover
 import presidentImg   from "../assets/Hero/President.png";
 import principalImg   from "../assets/Hero/Principal.jpg";
 import schoolImg      from "../assets/Hero/school.jpeg";
@@ -37,7 +38,6 @@ function useInView() {
 function SectionTitle({ title, hexColor, visible }) {
   return (
     <div className={`max-w-6xl mx-auto px-6 pt-12 transition-all duration-1000 transform ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}`}>
-      {/* Box background with guaranteed high-contrast dark inline text color */}
       <div className="inline-block bg-white border border-gray-200 shadow-md rounded-2xl p-6 md:p-8 min-w-[280px] sm:min-w-[340px]">
         <h2 
           className="text-3xl md:text-4xl font-black uppercase tracking-wide mb-3 block"
@@ -104,8 +104,6 @@ function SpotlightSection({ sectionRef, visible, bg, hexColor, sectionTitle, ima
 export default function Hero() {
   const [isLoading, setIsLoading]         = useState(true);
   const [fadePreloader, setFadePreloader] = useState(false);
-  const [rotate, setRotate]               = useState({ x: 7, y: -28 });
-  const [isHovered, setIsHovered]         = useState(false);
 
   const [aboutRef,     aboutVisible]     = useInView();
   const [presidentRef, presidentVisible] = useInView();
@@ -118,17 +116,21 @@ export default function Hero() {
     return () => clearTimeout(t);
   }, []);
 
-  const handleMouseMove = (e) => {
-    const r = e.currentTarget.getBoundingClientRect();
-    setRotate({
-      x: ((e.clientY - r.top)  / r.height - 0.5) * -30,
-      y: ((e.clientX - r.left) / r.width  - 0.5) *  30,
-    });
-  };
-
   return (
     <>
- 
+      {/* Injecting CSS Keyframes dynamically for the 360 degree book spin */}
+      <style>{`
+        @keyframes spin3d {
+          0% { transform: rotateY(0deg); }
+          100% { transform: rotateY(360deg); }
+        }
+        .animate-book-spin {
+          animation: spin3d 12s linear infinite;
+        }
+        .animate-book-spin:hover {
+          animation-play-state: paused;
+        }
+      `}</style>
 
       {/* Static Hero Banner */}
       <section
@@ -199,7 +201,6 @@ export default function Hero() {
       {/* 3. Our Mentor (Nisha Peshin) */}
       <section ref={nishaRef} className="w-full bg-[#fcf8f2] pb-16 md:pb-24 border-b border-gray-200/50 overflow-hidden">
         <div className={`max-w-7xl mx-auto px-6 pt-12 transition-all duration-1000 transform ${nishaVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}`}>
-          {/* Box background styled perfectly using reliable inline styles */}
           <div className="inline-block bg-white border border-gray-200 shadow-md rounded-2xl p-6 md:p-8 min-w-[280px] sm:min-w-[340px]">
             <h2 className="text-3xl md:text-4xl font-black tracking-wide mb-3 block" style={{ color: "#b23b3b" }}>
               Our Mentor
@@ -231,24 +232,61 @@ export default function Hero() {
               </div>
             </div>
           </div>
+
+          {/* Fully Rotating 3D Book Showcase */}
           <div className={`lg:col-span-4 flex flex-col items-center justify-center mt-10 lg:mt-0 transition-all duration-1000 delay-300 ${nishaVisible ? "opacity-100 translate-x-0" : "opacity-0 translate-x-16"}`}>
-            <div className="relative py-12 px-16 cursor-grab active:cursor-grabbing" style={{ perspective: "1500px" }}
-              onMouseMove={handleMouseMove}
-              onMouseEnter={() => setIsHovered(true)}
-              onMouseLeave={() => { setIsHovered(false); setRotate({ x: 7, y: -28 }); }}>
-              <div className="relative w-60 shadow-2xl rounded-r-md transition-all duration-150 ease-out"
-                style={{ height: "21rem", transformStyle: "preserve-3d", transform: `rotateX(${rotate.x}deg) rotateY(${rotate.y}deg) scale(${isHovered ? 1.05 : 1})` }}>
-                <div className="absolute inset-0 w-full h-full rounded-r-md bg-cover bg-center z-20"
-                  style={{ backgroundImage: `url(${bookCoverImg})`, backfaceVisibility: "hidden" }}>
+            <div className="relative py-12 px-16" style={{ perspective: "1500px" }}>
+              <div 
+                className="relative w-60 shadow-2xl rounded-r-md animate-book-spin cursor-pointer"
+                style={{ height: "21rem", transformStyle: "preserve-3d" }}
+              >
+                {/* Front Cover Layer */}
+                <div 
+                  className="absolute inset-0 w-full h-full rounded-r-md bg-cover bg-center z-20"
+                  style={{ 
+                    backgroundImage: `url(${bookCoverImg})`, 
+                    backfaceVisibility: "hidden",
+                    transform: "translateZ(12px)" 
+                  }}
+                >
                   <div className="absolute inset-0 bg-gradient-to-r from-white/10 via-transparent to-black/20 rounded-r-md" />
                 </div>
-                <div className="absolute top-0 bottom-0 w-7 bg-gradient-to-b from-[#6e2222] via-[#521717] to-[#3a1010]"
-                  style={{ left: 0, transform: "rotateY(-90deg)", transformOrigin: "left" }} />
-                <div className="absolute top-[2px] bottom-[2px] w-6 bg-gradient-to-r from-gray-100 via-gray-200 to-amber-50 border-y border-r border-gray-300 rounded-r-sm"
-                  style={{ right: "-22px", transform: "rotateY(90deg)", transformOrigin: "left" }} />
+
+                {/* Back Cover Layer */}
+                <div 
+                  className="absolute inset-0 w-full h-full rounded-l-md bg-cover bg-center z-10"
+                  style={{ 
+                    backgroundImage: `url(${bookBackImg})`, 
+                    backfaceVisibility: "hidden",
+                    transform: "translateZ(-12px) rotateY(180deg)" 
+                  }}
+                >
+                  <div className="absolute inset-0 bg-gradient-to-l from-white/10 via-transparent to-black/20 rounded-l-md" />
+                </div>
+
+                {/* Left Spine Layer */}
+                <div 
+                  className="absolute top-0 bottom-0 w-6 bg-gradient-to-b from-[#6e2222] via-[#521717] to-[#3a1010]"
+                  style={{ 
+                    left: "-12px", 
+                    transform: "rotateY(-90deg)",
+                    transformOrigin: "right"
+                  }} 
+                />
+
+                {/* Right Pages Inner Layer */}
+                <div 
+                  className="absolute top-[2px] bottom-[2px] w-6 bg-gradient-to-r from-gray-100 via-gray-200 to-amber-50 border-y border-r border-gray-300 rounded-r-sm"
+                  style={{ 
+                    right: "-12px", 
+                    transform: "rotateY(90deg)",
+                    transformOrigin: "left"
+                  }} 
+                />
               </div>
-              <div className="absolute bottom-2 left-10 right-4 h-6 bg-black/20 blur-xl rounded-full pointer-events-none" />
+              <div className="absolute bottom-2 left-10 right-4 h-6 bg-black/10 blur-xl rounded-full pointer-events-none" />
             </div>
+            
             <div className="text-center mt-6">
               <a href="https://www.nishapeshin.in/" target="_blank" rel="noopener noreferrer"
                 className="inline-block bg-[#1a1a6e] hover:bg-[#25258c] text-white text-xs font-bold px-5 py-2 rounded-full uppercase tracking-widest mb-3 shadow-md transition-all duration-300 hover:-translate-y-0.5">
