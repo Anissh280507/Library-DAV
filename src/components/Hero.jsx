@@ -160,44 +160,6 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* 1. About School */}
-      <SpotlightSection
-        sectionRef={aboutRef}
-        visible={aboutVisible}
-        bg="bg-[#f0faf4]"
-        hexColor="#1a5c36"
-        sectionTitle="About School"
-        image={schoolImg}
-        imageAlt="DAV Public School Airoli"
-        quote="Founded in the year 1998, D.A.V. Public School, Airoli, Navi Mumbai has the strength of more than 4000 students on its rolls. It upholds the great motto of imparting the modern and technological oriented education blended together with the rich Indian culture and ethics."
-        name="DAV Public School, Airoli"
-        role="Navi Mumbai, Maharashtra · Est. 1998"
-        badge="4000+ Students on Rolls"
-        badgeBg="text-green-800 bg-green-100"
-        borderColor="border-green-200/60"
-        imageRight={false}
-        readMoreUrl="https://davairoli.ac.in/5C0A6447-872D-43FE-ABA1-9B5EAF253B77/CMS/Page/About-School"
-      />
-
-      {/* 2. Our Mentor (President) */}
-      <SpotlightSection
-        sectionRef={presidentRef}
-        visible={presidentVisible}
-        bg="bg-[#e8f4fd]"
-        hexColor="#1a1a6e"
-        sectionTitle="Our Mentor"
-        image={presidentImg}
-        imageAlt="DAV President"
-        quote="DAV College Managing Committee (DAVCMC) is dedicated to nurturing generations of students with a strong foundation in values, knowledge, and a spirit of service to the nation. Education is not merely about acquiring degrees — it is about building character, cultivating wisdom, and inspiring a lifelong love for learning."
-        name="DAV President"
-        role="DAV College Managing Committee"
-        badge="Guiding 900+ DAV Institutions Nationwide"
-        badgeBg="text-blue-800 bg-blue-100"
-        borderColor="border-blue-200/60"
-        imageRight={true}
-        readMoreUrl="https://davcmc.net.in/B46D2794-51B4-4B3A-95B8-46BB25875D74/CMS/Page/MESSAGE-OF-THE-PRESIDENT"
-      />
-
       {/* 3. Our Mentor (Nisha Peshin) */}
       <section ref={nishaRef} className="w-full bg-[#fcf8f2] pb-16 md:pb-24 border-b border-gray-200/50 overflow-hidden">
         <div className={`max-w-7xl mx-auto px-6 pt-12 transition-all duration-1000 transform ${nishaVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}`}>
@@ -299,24 +261,7 @@ export default function Hero() {
         </div>
       </section>
 
-      {/* 4. Our Principal */}
-      <SpotlightSection
-        sectionRef={principalRef}
-        visible={principalVisible}
-        bg="bg-[#fdf4ff]"
-        hexColor="#5b1a6e"
-        sectionTitle="Our Principal"
-        image={principalImg}
-        imageAlt="Principal, DAV Airoli"
-        quote="DAV Airoli, under the aegis of DAVCMC, New Delhi is doing an exceptionally commendable job to shape the destiny of thousands of children. Our vision is of all round development of our students where we inspire them to be creative, innovative and sensitive human beings."
-        name="Principal's Message"
-        role="DAV Public School, Airoli"
-        badge="Shaping Future Leaders Since 1998"
-        badgeBg="text-purple-800 bg-purple-100"
-        borderColor="border-purple-200/60"
-        imageRight={false}
-        readMoreUrl="https://davairoli.ac.in/14056EE2-4E1F-4D2D-BD0B-FD60BFA5066F/CMS/Page/Principal%E2%80%99s-Message"
-      />
+    
     </>
   );
 }

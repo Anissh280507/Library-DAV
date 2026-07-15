@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { ThemeProvider } from "./context/ThemeContext";
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
@@ -12,8 +12,10 @@ import CirculationPolicy from "./components/CirculationPolicy";
 import NewArrivalsSlider from "./components/NewArrivalsSlider";
 import LibraryServices from "./components/LibraryServices";
 
-// Correct import path pointing to the pages directory
+// 1. Corrected the path string by removing the unsafe space character
+import DailyReads from "./pages/DailyReads"; 
 import DonatedBooks from "./pages/DonatedBooks";
+import Crossword from "./pages/Crossword";
 
 function Home() {
   return (
@@ -41,7 +43,11 @@ export default function App() {
             <Route path="/new-arrivals" element={<NewArrivals />} />
             <Route path="/events" element={<Events />} />
             
-            {/* Added both routes to handle nav links and prevent unmatched location warnings */}
+            {/* 2. Registered the daily reads interface endpoint */}
+            <Route path="/daily-reads" element={<DailyReads />} />
+            <Route path="/dailyreads" element={<Navigate to="/daily-reads" replace />} />
+            <Route path="/crossword" element={<Crossword />} />
+            
             <Route path="/donate" element={<DonatedBooks />} />
             <Route path="/donated-books" element={<DonatedBooks />} />
           </Routes>

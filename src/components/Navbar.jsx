@@ -4,13 +4,14 @@ import { Menu, X } from "lucide-react";
 import davLogo from "../assets/DAV logo.png";
 
 const navLinks = [
-  { label: "Home",      to: "/" },
-  { label: "Resources", to: "/resources" },
-  { label: "Faculty",   to: "/faculty" },
-  { label: "Events",    to: "/events" },
-  { label: "Donated Books",   to: "/donate" },
-  { label: "Contact",   to: "/contact" },
-
+  { label: "Home",          to: "/" },
+  { label: "Resources",     to: "/resources" },
+  { label: "Daily Reads",   to: "/daily-reads" },
+  { label: "Crossword",     to: "/crossword" },
+  { label: "Faculty",       to: "/faculty" },
+  { label: "Events",        to: "/events" },
+  { label: "Donated Books", to: "/donate" },
+  { label: "Contact",       to: "/contact" },
 ];
 
 export default function Navbar() {
