@@ -16,6 +16,7 @@ import LibraryServices from "./components/LibraryServices";
 import DailyReads from "./pages/DailyReads"; 
 import DonatedBooks from "./pages/DonatedBooks";
 import Crossword from "./pages/Crossword";
+import BookReviews from "./pages/BookReviews";
 
 function Home() {
   return (
@@ -47,6 +48,7 @@ export default function App() {
             <Route path="/daily-reads" element={<DailyReads />} />
             <Route path="/dailyreads" element={<Navigate to="/daily-reads" replace />} />
             <Route path="/crossword" element={<Crossword />} />
+            <Route path="/book-reviews" element={<BookReviews />} />
             
             <Route path="/donate" element={<DonatedBooks />} />
             <Route path="/donated-books" element={<DonatedBooks />} />

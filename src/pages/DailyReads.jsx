@@ -10,23 +10,15 @@ export default function DailyReads() {
   const updateDateFromDayOfYear = (dayNum) => {
     const currentYear = new Date().getFullYear();
     const targetDate = new Date(currentYear, 0, dayNum);
-    
-    const dateOptions = { day: 'numeric', month: 'long', year: 'numeric' };
-    setDisplayDate(targetDate.toLocaleDateString('en-IN', dateOptions));
-
-    const dayNameOptions = { weekday: 'long' };
-    setDisplayDayName(targetDate.toLocaleDateString('en-IN', dayNameOptions));
-    
+    setDisplayDate(targetDate.toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' }));
+    setDisplayDayName(targetDate.toLocaleDateString('en-IN', { weekday: 'long' }));
     setCurrentMonthIndex(targetDate.getMonth());
   };
 
   useEffect(() => {
     const now = new Date();
     const start = new Date(now.getFullYear(), 0, 0);
-    const diff = now - start;
-    const oneDay = 1000 * 60 * 60 * 24;
-    const day = Math.floor(diff / oneDay);
-    
+    const day = Math.floor((now - start) / 86400000);
     setDayOfYear(day);
     updateDateFromDayOfYear(day);
   }, []);
@@ -40,186 +32,138 @@ export default function DailyReads() {
   const monthly = MONTHLY_CURATION_DATA[currentMonthIndex];
 
   return (
-    <div style={{ 
-      maxWidth: '1200px', 
-      margin: '40px auto', 
-      padding: '32px', 
-      fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif', 
-      backgroundColor: '#f8fafc', 
-      color: '#0f172a',
-      borderRadius: '24px',
-      boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.05), 0 10px 10px -5px rgba(0, 0, 0, 0.04)'
-    }}>
-      
-      {/* Enhanced Header Banner */}
-      <header style={{ 
-        borderBottom: '1px solid #e2e8f0', 
-        paddingBottom: '24px', 
-        marginBottom: '40px', 
-        display: 'flex', 
-        justifyContent: 'space-between', 
-        alignItems: 'flex-end',
-        flexWrap: 'wrap',
-        gap: '16px'
-      }}>
-        <div>
-          <h1 style={{ fontSize: '36px', fontWeight: '800', letterSpacing: '-0.03em', margin: 0, color: '#1e293b' }}>
-            Daily Reads
-          </h1>
-          <p style={{ color: '#64748b', marginTop: '8px', fontSize: '16px', fontWeight: '500' }}>
-            {displayDayName}, <span style={{ color: '#3b82f6', fontWeight: '600' }}>{displayDate}</span>
-          </p>
-        </div>
-        
-        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-          <div style={{ fontSize: '14px', backgroundColor: '#f1f5f9', color: '#475569', padding: '8px 16px', borderRadius: '9999px', fontWeight: '600', border: '1px solid #e2e8f0' }}>
-            Day <span style={{ color: '#0f172a', fontWeight: '700' }}>{dayOfYear}</span> of 365
-          </div>
-          <div style={{ backgroundColor: '#eff6ff', color: '#2563eb', padding: '8px 20px', borderRadius: '9999px', fontWeight: '700', fontSize: '14px', letterSpacing: '0.02em', textTransform: 'uppercase', border: '1px solid #bfdbfe' }}>
-            {monthly?.month || "Edition"} Edition
-          </div>
-        </div>
-      </header>
+    <div className="min-h-screen bg-slate-50 py-6 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-5xl mx-auto">
 
-      {/* Modern Card Workspace Grid Layout */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(450px, 1fr))', gap: '32px' }}>
-        
-        {/* SECTION 1: WORD OF THE DAY */}
-        <div style={{ backgroundColor: '#ffffff', padding: '32px', borderRadius: '20px', boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.05)', border: '1px solid #edf2f7', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+        {/* ── Header ── */}
+        <header className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 pb-6 mb-8 border-b border-slate-200">
           <div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '16px' }}>
-              <span style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: '#3b82f6' }}></span>
-              <span style={{ fontSize: '11px', textTransform: 'uppercase', color: '#3b82f6', fontWeight: '800', letterSpacing: '0.1em' }}>Vocabulary Expansion</span>
-            </div>
-            
-            <div style={{ display: 'flex', alignItems: 'baseline', gap: '12px', marginBottom: '8px' }}>
-              <h2 style={{ fontSize: '32px', fontWeight: '800', color: '#1e293b', margin: 0, letterSpacing: '-0.02em' }}>{daily.word}</h2>
-              <span style={{ color: '#64748b', fontSize: '14px', fontStyle: 'italic', fontWeight: '500' }}>({daily.type})</span>
-            </div>
-            
-            <p style={{ fontSize: '16px', lineHeight: '1.6', color: '#334155', margin: '16px 0 24px 0', paddingLeft: '16px', borderLeft: '4px solid #3b82f6', fontWeight: '500' }}>
-              {daily.meaning}
+            <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">Daily Reads</h1>
+            <p className="mt-2 text-sm sm:text-base text-slate-500 font-medium">
+              {displayDayName},{' '}
+              <span className="text-blue-600 font-semibold">{displayDate}</span>
             </p>
           </div>
+          <div className="flex flex-wrap items-center gap-2">
+            <span className="text-xs bg-slate-100 text-slate-600 border border-slate-200 px-3 py-1.5 rounded-full font-semibold">
+              Day <span className="text-slate-900 font-bold">{dayOfYear}</span> of 365
+            </span>
+            <span className="text-xs bg-blue-50 text-blue-700 border border-blue-200 px-3 py-1.5 rounded-full font-bold uppercase tracking-wide">
+              {monthly?.month || 'Edition'} Edition
+            </span>
+          </div>
+        </header>
 
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px', paddingTop: '20px', borderTop: '1px solid #f1f5f9' }}>
-            <div style={{ backgroundColor: '#f0fdf4', padding: '12px 16px', borderRadius: '12px' }}>
-              <strong style={{ display: 'block', fontSize: '12px', color: '#166534', textTransform: 'uppercase', marginBottom: '4px' }}>Synonyms</strong>
-              <span style={{ fontSize: '14px', color: '#14532d', fontWeight: '600' }}>{daily.synonyms.join(', ')}</span>
+        {/* ── Card Grid ── */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 sm:gap-6">
+
+          {/* SECTION 1 — Word of the Day */}
+          <div className="bg-white rounded-2xl border border-slate-100 shadow-sm p-5 sm:p-7 flex flex-col justify-between">
+            <div>
+              <div className="flex items-center gap-2 mb-4">
+                <span className="w-2 h-2 rounded-full bg-blue-500 flex-shrink-0" />
+                <span className="text-[11px] font-extrabold uppercase tracking-widest text-blue-500">Vocabulary Expansion</span>
+              </div>
+              <div className="flex flex-wrap items-baseline gap-2 mb-2">
+                <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">{daily.word}</h2>
+                <span className="text-sm italic text-slate-500 font-medium">({daily.type})</span>
+              </div>
+              <p className="text-sm sm:text-base text-slate-600 leading-relaxed mt-3 mb-5 pl-4 border-l-4 border-blue-500 font-medium">
+                {daily.meaning}
+              </p>
             </div>
-            <div style={{ backgroundColor: '#fef2f2', padding: '12px 16px', borderRadius: '12px' }}>
-              <strong style={{ display: 'block', fontSize: '12px', color: '#991b1b', textTransform: 'uppercase', marginBottom: '4px' }}>Antonyms</strong>
-              <span style={{ fontSize: '14px', color: '#7f1d1d', fontWeight: '600' }}>{daily.antonyms.join(', ')}</span>
+            <div className="grid grid-cols-2 gap-3 pt-4 border-t border-slate-100">
+              <div className="bg-green-50 rounded-xl px-4 py-3">
+                <strong className="block text-[11px] uppercase tracking-wider text-green-700 mb-1">Synonyms</strong>
+                <span className="text-sm text-green-900 font-semibold">{daily.synonyms.join(', ')}</span>
+              </div>
+              <div className="bg-red-50 rounded-xl px-4 py-3">
+                <strong className="block text-[11px] uppercase tracking-wider text-red-700 mb-1">Antonyms</strong>
+                <span className="text-sm text-red-900 font-semibold">{daily.antonyms.join(', ')}</span>
+              </div>
             </div>
           </div>
+
+          {/* SECTION 2 — Phrase & Idiom */}
+          <div className="bg-white rounded-2xl border border-slate-100 shadow-sm p-5 sm:p-7 flex flex-col gap-4">
+            <div className="flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-emerald-500 flex-shrink-0" />
+              <span className="text-[11px] font-extrabold uppercase tracking-widest text-emerald-500">Idiomatic Expressions</span>
+            </div>
+            <div className="bg-slate-50 rounded-xl border border-slate-200 p-4">
+              <h3 className="text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-2">Phrase of the Day</h3>
+              <p className="text-base sm:text-lg font-bold text-slate-900 italic">"{daily.phrase}"</p>
+            </div>
+            <div className="bg-slate-50 rounded-xl border border-slate-200 p-4">
+              <h3 className="text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-2">Idiom of the Day</h3>
+              <p className="text-base sm:text-lg font-bold text-slate-900 italic">"{daily.idiom}"</p>
+            </div>
+          </div>
+
+          {/* SECTION 3 — Author of the Month */}
+          <div className="bg-white rounded-2xl border border-slate-100 shadow-sm p-5 sm:p-7 flex flex-col justify-between">
+            <div>
+              <div className="flex items-center gap-2 mb-4">
+                <span className="w-2 h-2 rounded-full bg-amber-500 flex-shrink-0" />
+                <span className="text-[11px] font-extrabold uppercase tracking-widest text-amber-500">Featured Indian Author</span>
+              </div>
+              <h2 className="text-xl sm:text-2xl font-extrabold text-slate-900 mb-3 leading-tight">{monthly.author.name}</h2>
+              <p className="text-sm sm:text-base text-slate-500 leading-relaxed mb-5">{monthly.author.bio}</p>
+            </div>
+            <div className="bg-amber-50 rounded-xl border border-amber-100 px-4 py-4">
+              <strong className="block text-[11px] uppercase tracking-wider text-amber-700 mb-2">Essential Literary Works</strong>
+              <ul className="list-disc list-inside space-y-1">
+                {monthly.author.works.map((work, idx) => (
+                  <li key={idx} className="text-sm italic text-amber-900 font-semibold">{work}</li>
+                ))}
+              </ul>
+            </div>
+          </div>
+
+          {/* SECTION 4 — Book of the Month */}
+          <div className="bg-white rounded-2xl border border-slate-100 shadow-sm p-5 sm:p-7 flex flex-col">
+            <div className="flex items-center gap-2 mb-4">
+              <span className="w-2 h-2 rounded-full bg-violet-500 flex-shrink-0" />
+              <span className="text-[11px] font-extrabold uppercase tracking-widest text-violet-500">Monthly Curated Reading</span>
+            </div>
+            <h2 className="text-xl sm:text-2xl font-extrabold text-slate-900 leading-tight">{monthly.book.title}</h2>
+            <span className="text-sm text-slate-500 font-semibold mt-1 mb-4">By {monthly.book.author}</span>
+            <div className="bg-slate-50 rounded-xl border border-slate-100 p-4 flex-1">
+              <strong className="block text-[11px] uppercase tracking-wider text-slate-500 mb-2">Synopsis</strong>
+              <p className="text-sm sm:text-base text-slate-600 leading-relaxed">{monthly.book.summary}</p>
+            </div>
+          </div>
+
         </div>
 
-        {/* SECTION 2: PHRASES & IDIOMS */}
-        <div style={{ backgroundColor: '#ffffff', padding: '32px', borderRadius: '20px', boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.05)', border: '1px solid #edf2f7', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
-          <div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '20px' }}>
-              <span style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: '#10b981' }}></span>
-              <span style={{ fontSize: '11px', textTransform: 'uppercase', color: '#10b981', fontWeight: '800', letterSpacing: '0.1em' }}>Idiomatic Expressions</span>
-            </div>
-            
-            <div style={{ backgroundColor: '#f8fafc', padding: '20px', borderRadius: '16px', border: '1px solid #e2e8f0', marginBottom: '20px' }}>
-              <h3 style={{ fontSize: '12px', fontWeight: '700', color: '#64748b', textTransform: 'uppercase', margin: '0 0 6px 0', letterSpacing: '0.05em' }}>Phrase of the Day</h3>
-              <p style={{ fontSize: '18px', fontWeight: '700', color: '#0f172a', margin: 0, fontStyle: 'italic' }}>“{daily.phrase}”</p>
-            </div>
-
-            <div style={{ backgroundColor: '#f8fafc', padding: '20px', borderRadius: '16px', border: '1px solid #e2e8f0' }}>
-              <h3 style={{ fontSize: '12px', fontWeight: '700', color: '#64748b', textTransform: 'uppercase', margin: '0 0 6px 0', letterSpacing: '0.05em' }}>Idiom of the Day</h3>
-              <p style={{ fontSize: '18px', fontWeight: '700', color: '#0f172a', margin: 0, fontStyle: 'italic' }}>“{daily.idiom}”</p>
-            </div>
+        {/* ── Footer Nav ── */}
+        <footer className="mt-10 pt-6 border-t border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-3">
+          <div className="flex gap-3 w-full sm:w-auto">
+            <button
+              onClick={() => handleDayShift(Math.max(1, dayOfYear - 1))}
+              className="flex-1 sm:flex-none px-4 py-2.5 rounded-xl border border-slate-200 bg-white text-slate-700 text-sm font-semibold hover:bg-slate-50 transition-colors shadow-sm"
+            >
+              ← Previous Day
+            </button>
+            <button
+              onClick={() => handleDayShift(Math.min(365, dayOfYear + 1))}
+              className="flex-1 sm:flex-none px-4 py-2.5 rounded-xl border border-slate-200 bg-white text-slate-700 text-sm font-semibold hover:bg-slate-50 transition-colors shadow-sm"
+            >
+              Next Day →
+            </button>
           </div>
-        </div>
-
-        {/* SECTION 3: AUTHOR OF THE MONTH */}
-        <div style={{ backgroundColor: '#ffffff', padding: '32px', borderRadius: '20px', boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.05)', border: '1px solid #edf2f7', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
-          <div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '16px' }}>
-              <span style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: '#f59e0b' }}></span>
-              <span style={{ fontSize: '11px', textTransform: 'uppercase', color: '#f59e0b', fontWeight: '800', letterSpacing: '0.1em' }}>Featured Indian Author</span>
-            </div>
-            
-            <h2 style={{ fontSize: '26px', fontWeight: '800', color: '#1e293b', marginTop: '4px', marginBottom: '12px', letterSpacing: '-0.01em' }}>{monthly.author.name}</h2>
-            <p style={{ fontSize: '15px', color: '#475569', lineHeight: '1.6', marginBottom: '24px' }}>{monthly.author.bio}</p>
-          </div>
-          
-          <div style={{ backgroundColor: '#fffbeb', padding: '16px 20px', borderRadius: '16px', border: '1px solid #fef3c7' }}>
-            <strong style={{ display: 'block', fontSize: '12px', color: '#b45309', textTransform: 'uppercase', marginBottom: '8px', letterSpacing: '0.05em' }}>Essential Literary Works</strong>
-            <ul style={{ margin: 0, paddingLeft: '20px', display: 'flex', flexDirection: 'column', gap: '6px' }}>
-              {monthly.author.works.map((work, idx) => (
-                <li key={idx} style={{ fontStyle: 'italic', color: '#78350f', fontWeight: '600', fontSize: '14px' }}>{work}</li>
-              ))}
-            </ul>
-          </div>
-        </div>
-
-        {/* SECTION 4: BOOK OF THE MONTH */}
-        <div style={{ backgroundColor: '#ffffff', padding: '32px', borderRadius: '20px', boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.05)', border: '1px solid #edf2f7', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
-          <div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '16px' }}>
-              <span style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: '#8b5cf6' }}></span>
-              <span style={{ fontSize: '11px', textTransform: 'uppercase', color: '#8b5cf6', fontWeight: '800', letterSpacing: '0.1em' }}>Monthly Curated Reading</span>
-            </div>
-            
-            <h2 style={{ fontSize: '26px', fontWeight: '800', color: '#1e293b', marginTop: '4px', marginBottom: '4px', letterSpacing: '-0.01em' }}>{monthly.book.title}</h2>
-            <span style={{ fontSize: '14px', color: '#64748b', fontWeight: '600', display: 'block', marginBottom: '16px' }}>By {monthly.book.author}</span>
-            
-            <p style={{ fontSize: '15px', color: '#475569', lineHeight: '1.6', margin: 0, backgroundColor: '#fafafa', padding: '16px', borderRadius: '12px', border: '1px solid #f1f5f9' }}>
-              <strong style={{ color: '#0f172a', display: 'block', marginBottom: '4px', fontSize: '13px', textTransform: 'uppercase' }}>Synopsis</strong> 
-              {monthly.book.summary}
-            </p>
-          </div>
-        </div>
+          <button
+            onClick={() => {
+              const d = new Date();
+              handleDayShift(Math.floor((d - new Date(d.getFullYear(), 0, 0)) / 86400000));
+            }}
+            className="w-full sm:w-auto px-6 py-2.5 rounded-xl bg-slate-900 text-white text-sm font-semibold hover:bg-slate-700 transition-colors shadow-sm"
+          >
+            Reset to Today
+          </button>
+        </footer>
 
       </div>
-
-      {/* Modern Sim Navigation Control Footer */}
-      <footer style={{ 
-        marginTop: '48px', 
-        paddingTop: '24px', 
-        borderTop: '1px solid #e2e8f0', 
-        display: 'flex', 
-        justifyContent: 'space-between', 
-        alignItems: 'center', 
-        flexWrap: 'wrap',
-        gap: '16px' 
-      }}>
-        <div style={{ display: 'flex', gap: '12px' }}>
-          <button 
-            onClick={() => { handleDayShift(Math.max(1, dayOfYear - 1)); }} 
-            style={{ padding: '10px 20px', borderRadius: '12px', border: '1px solid #cbd5e1', backgroundColor: '#ffffff', color: '#334155', cursor: 'pointer', fontSize: '14px', fontWeight: '600', transition: 'all 0.2s', boxShadow: '0 1px 2px rgba(0,0,0,0.05)' }}
-            onMouseEnter={(e) => e.target.style.backgroundColor = '#f8fafc'}
-            onMouseLeave={(e) => e.target.style.backgroundColor = '#ffffff'}
-          >
-            ← Previous Day
-          </button>
-          <button 
-            onClick={() => { handleDayShift(Math.min(365, dayOfYear + 1)); }} 
-            style={{ padding: '10px 20px', borderRadius: '12px', border: '1px solid #cbd5e1', backgroundColor: '#ffffff', color: '#334155', cursor: 'pointer', fontSize: '14px', fontWeight: '600', transition: 'all 0.2s', boxShadow: '0 1px 2px rgba(0,0,0,0.05)' }}
-            onMouseEnter={(e) => e.target.style.backgroundColor = '#f8fafc'}
-            onMouseLeave={(e) => e.target.style.backgroundColor = '#ffffff'}
-          >
-            Next Day →
-          </button>
-        </div>
-        
-        <button 
-          onClick={() => { 
-            const d = new Date(); 
-            const todayNum = Math.floor((d - new Date(d.getFullYear(),0,0)) / 86400000); 
-            handleDayShift(todayNum); 
-          }} 
-          style={{ padding: '10px 24px', borderRadius: '12px', backgroundColor: '#0f172a', color: '#ffffff', border: 'none', cursor: 'pointer', fontSize: '14px', fontWeight: '600', transition: 'all 0.2s' }}
-          onMouseEnter={(e) => e.target.style.backgroundColor = '#1e293b'}
-          onMouseLeave={(e) => e.target.style.backgroundColor = '#0f172a'}
-        >
-          Reset to Today
-        </button>
-      </footer>
-
     </div>
   );
 }

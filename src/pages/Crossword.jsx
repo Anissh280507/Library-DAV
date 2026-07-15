@@ -4,7 +4,7 @@ import { generateCrossword } from '../hooks/useCrosswordGenerator';
 
 // ─── CROSSWORD GRID (REFACTORED MINIMAL PALETTE & BOLD INPUTS) ───────────────
 function CrosswordGrid({ grid, gridSize, words, userGrid, activeCell, activeWord, revealedCells, wrongCells, onCellClick, onKeyDown, onInputChange, inputRefs }) {
-  const cellSize = Math.min(54, Math.floor(720 / gridSize));
+  const cellSize = Math.min(36, Math.floor(480 / gridSize));
 
   return (
     <div className="overflow-auto flex justify-center">
