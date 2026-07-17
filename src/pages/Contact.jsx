@@ -20,14 +20,14 @@ const whyItems = [
 
 export default function Contact() {
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 dark:bg-slate-950">
       {/* Header */}
       <div className="bg-[#1a3adb] px-8 py-16 text-center">
         <Badge className="mb-4 bg-white/20 text-white hover:bg-white/20 text-xs px-3 py-1">Contact</Badge>
         <h1 className="text-4xl font-extrabold text-white" style={{ textShadow: "0 2px 12px rgba(0,0,0,0.25)" }}>
           Get in Touch
         </h1>
-        <p className="text-blue-200 mt-3 text-base max-w-md mx-auto">
+        <p className="text-blue-200 mt-3 text-base max-w-md mx-auto text-center">
           We're here to help and answer any questions you might have
         </p>
       </div>
