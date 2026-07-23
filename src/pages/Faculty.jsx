@@ -7,6 +7,7 @@ import { useState, useMemo } from "react";
 import imgPunamSuri from "../assets/Faculty/Punam Suri.png";
 import imgNishaPeshin from "../assets/Faculty/Nisha Peshin.jpeg";
 import imgSeemaMaindiratta from "../assets/Faculty/Seema.jpg";
+import imgJayashree from "../assets/Faculty/JAYASHREE KHANDEKAR.png";
 
 // Faculty
 import imgAkshadaSonawane from "../assets/Faculty/Akshada Sonawane.jpeg";
@@ -54,12 +55,19 @@ const MENTORS = [
     subtitle: "Public Schools, DAV CMC",
     img: imgNishaPeshin,
   },
+    {
+    name: "Ms. Jayashree Khandekar",
+    role: "Manager",
+    subtitle: "Principal, DAV Public School Pune",
+    img: imgJayashree,
+  },
   {
     name: "Ms. Seema Maindiratta",
     role: "ARO - Zone A",
-    subtitle: "DAV Public Schools",
+    subtitle: "Principal, DAV Public School Kharghar",
     img: imgSeemaMaindiratta,
   },
+
 ];
 
 const STATS = [
@@ -149,18 +157,17 @@ export default function Faculty() {
 
   return (
     <div className="min-h-screen bg-[#f8fafc] text-slate-800 antialiased font-sans pb-16">
-      {/* Header section */}
-{/* Header section with centered title and subtitle */}
-<header className="bg-gradient-to-r from-[#1e40af] to-[#1d4ed8] px-6 py-14 text-white text-center shadow-sm">
-  <div className="max-w-6xl mx-auto flex flex-col items-center justify-center text-center">
-    <h1 className="text-3xl md:text-5xl font-black tracking-tight mb-2 text-center w-full">
-      Meet Our Team
-    </h1>
-    <p className="text-blue-100 opacity-90 text-sm md:text-base font-medium max-w-xl mx-auto text-center w-full">
-      Library Committee 2026–27 · DAV Public School, Airoli
-    </p>
-  </div>
-</header>
+      {/* Header section with centered title and subtitle */}
+      <header className="bg-gradient-to-r from-[#1e40af] to-[#1d4ed8] px-6 py-14 text-white text-center shadow-sm">
+        <div className="max-w-6xl mx-auto flex flex-col items-center justify-center text-center">
+          <h1 className="text-3xl md:text-5xl font-black tracking-tight mb-2 text-center w-full">
+            Meet Our Team
+          </h1>
+          <p className="text-blue-100 opacity-90 text-sm md:text-base font-medium max-w-xl mx-auto text-center w-full">
+            Library Committee 2026–27 · DAV Public School, Airoli
+          </p>
+        </div>
+      </header>
 
       {/* Structured Stats Section */}
       <section className="max-w-5xl mx-auto px-4 -mt-8" aria-label="Statistics">
@@ -183,7 +190,7 @@ export default function Faculty() {
           <div className="w-12 h-1 bg-[#1d4ed8] mx-auto mt-2 rounded-full"></div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 max-w-5xl mx-auto">
           {MENTORS.map((mentor) => (
             <div
               key={mentor.name}
@@ -199,9 +206,9 @@ export default function Faculty() {
                   }}
                 />
               </div>
-              <h3 className="font-bold text-lg text-slate-900 tracking-tight">
+              <h4 className="font-bold text-lg text-slate-900 tracking-tight">
                 {mentor.name}
-              </h3>
+              </h4>
               <p className="text-[#1d4ed8] text-sm font-black mt-1 uppercase tracking-wider">
                 {mentor.role}
               </p>
