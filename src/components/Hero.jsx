@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import heroImg        from "../assets/hero.png";
 import nishaPeshinImg from "../assets/Hero/Nisha Pashin.jpeg";
 import bookCoverImg   from "../assets/Hero/Let them FLy.jpg";
-import bookBackImg    from "../assets/Hero/Let them FLy Back page.jpeg"; // Imported back cover
+import bookBackImg    from "../assets/Hero/Let them FLy Back page.jpeg";
 import presidentImg   from "../assets/Hero/President.png";
 import principalImg   from "../assets/Hero/Principal.jpg";
 import schoolImg      from "../assets/Hero/school.jpeg";
@@ -10,10 +10,11 @@ import schoolImg      from "../assets/Hero/school.jpeg";
 const stats = [
   { value: "1K+", label: "Digital Resources" },
   { value: "25+", label: "Faculty Members" },
-  { value: "3k+", label: "Active Users" },
+  { value: "3K+", label: "Active Users" },
   { value: "10+", label: "Events Yearly" },
 ];
 
+// Helper hook to trigger animations when scrolled into view
 function useInView() {
   const ref = useRef(null);
   const [visible, setVisible] = useState(false);
@@ -27,12 +28,60 @@ function useInView() {
           obs.disconnect(); 
         } 
       }),
-      { threshold: 0.1 }
+      { threshold: 0.2 }
     );
     obs.observe(el);
     return () => obs.disconnect();
   }, []);
   return [ref, visible];
+}
+
+// Animated Counter Component
+function AnimatedStat({ value, label, trigger }) {
+  const [count, setCount] = useState(0);
+
+  // Extract pure numeric target and prefix/suffix formatting (e.g. "1K+", "25+", "3000")
+  const numericMatch = value.match(/\d+/);
+  const target = numericMatch ? parseInt(numericMatch[0], 10) : 0;
+  const prefix = value.substring(0, value.indexOf(numericMatch ? numericMatch[0] : ""));
+  const suffix = value.substring((value.indexOf(numericMatch ? numericMatch[0] : "") + (numericMatch ? numericMatch[0].length : 0)));
+
+  useEffect(() => {
+    if (!trigger || target === 0) return;
+
+    let start = 0;
+    const duration = 2000; // Animation duration in milliseconds
+    const frameRate = 1000 / 60; // 60 FPS
+    const totalFrames = Math.round(duration / frameRate);
+    let frame = 0;
+
+    const timer = setInterval(() => {
+      frame++;
+      // Easing function (easeOutQuad) for smooth slow-down near target
+      const progress = frame / totalFrames;
+      const currentCount = Math.round(target * (1 - Math.pow(1 - progress, 2)));
+
+      if (frame >= totalFrames) {
+        setCount(target);
+        clearInterval(timer);
+      } else {
+        setCount(currentCount);
+      }
+    }, frameRate);
+
+    return () => clearInterval(timer);
+  }, [trigger, target]);
+
+  return (
+    <div className="flex-1 flex flex-col items-center text-center py-6 px-6 transform transition-all duration-700 ease-out">
+      <p className="text-3xl md:text-4xl font-black text-[#15155f] tracking-tight">
+        {prefix}{count}{suffix}
+      </p>
+      <p className="text-xs font-bold uppercase tracking-[0.16em] text-slate-500 mt-2">
+        {label}
+      </p>
+    </div>
+  );
 }
 
 function SectionTitle({ title, hexColor, visible }) {
@@ -51,64 +100,12 @@ function SectionTitle({ title, hexColor, visible }) {
   );
 }
 
-function SpotlightSection({ sectionRef, visible, bg, hexColor, sectionTitle, image, imageAlt, quote, name, role, badge, badgeBg, borderColor, imageRight = false, readMoreUrl }) {
-  const imgEl = (
-    <div className={`flex-shrink-0 transition-all duration-1000 ease-out ${visible ? "opacity-100 translate-x-0" : imageRight ? "opacity-0 translate-x-16" : "opacity-0 -translate-x-16"}`}>
-      <div className="relative">
-        <div className={`absolute -inset-3 border-2 ${borderColor} rounded-2xl pointer-events-none transform translate-x-3 translate-y-3`} />
-        <div className="w-72 sm:w-80 h-[22rem] rounded-2xl overflow-hidden shadow-xl border-4 border-white relative z-10">
-          <img src={image} alt={imageAlt} className="w-full h-full object-cover object-top" />
-        </div>
-      </div>
-    </div>
-  );
-
-  const textEl = (
-    <div className={`flex-1 transition-all duration-1000 ease-out delay-200 ${visible ? "opacity-100 translate-x-0" : imageRight ? "opacity-0 -translate-x-16" : "opacity-0 translate-x-16"}`}>
-      <span className="text-7xl font-serif font-bold leading-none block mb-2 opacity-30" style={{ color: hexColor }}>"</span>
-      <h4 className={`text-gray-800 text-lg md:text-xl leading-relaxed font-normal -mt-4 italic transition-all duration-1000 delay-500 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
-        {quote}
-      </h4>
-      <div className={`mt-8 border-t ${borderColor} pt-6 transition-all duration-1000 delay-700 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}`}>
-        <h3 className="text-2xl font-bold tracking-wide uppercase" style={{ color: hexColor }}>{name}</h3>
-        <p className="text-base text-gray-600 font-medium mt-0.5">{role}</p>
-        {badge && (
-          <span className={`inline-block mt-2 text-xs font-semibold uppercase tracking-wider px-3 py-1 rounded-md ${badgeBg}`}>
-            {badge}
-          </span>
-        )}
-        {readMoreUrl && (
-          <div className="mt-5">
-            <a href={readMoreUrl} target="_blank" rel="noopener noreferrer"
-              className="inline-block text-white text-xs font-bold px-6 py-2.5 rounded uppercase tracking-wider shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:opacity-90"
-              style={{ backgroundColor: hexColor }}>
-              Read More
-            </a>
-          </div>
-        )}
-      </div>
-    </div>
-  );
-
-  return (
-    <section ref={sectionRef} className={`w-full ${bg} pb-16 md:pb-24 border-b border-gray-200/40 overflow-hidden`}>
-      <SectionTitle title={sectionTitle} hexColor={hexColor} visible={visible} />
-      <div className={`max-w-6xl mx-auto px-6 pt-10 flex flex-col ${imageRight ? "lg:flex-row-reverse" : "lg:flex-row"} gap-14 items-center`}>
-        {imgEl}
-        {textEl}
-      </div>
-    </section>
-  );
-}
-
 export default function Hero() {
   const [isLoading, setIsLoading]         = useState(true);
   const [fadePreloader, setFadePreloader] = useState(false);
 
-  const [aboutRef,     aboutVisible]     = useInView();
-  const [presidentRef, presidentVisible] = useInView();
-  const [nishaRef,     nishaVisible]     = useInView();
-  const [principalRef, principalVisible] = useInView();
+  const [statsRef, statsVisible]   = useInView();
+  const [nishaRef, nishaVisible]   = useInView();
 
   useEffect(() => {
     const triggerExit = () => { setFadePreloader(true); setTimeout(() => setIsLoading(false), 500); };
@@ -152,19 +149,16 @@ export default function Hero() {
         </div>
       </section>
 
-      {/* Stats Bar */}
-      <div className="relative z-10 w-full bg-white border-b border-slate-100">
-        <div className="max-w-5xl mx-auto -mt-14 px-6 pb-10 flex flex-col md:flex-row items-center justify-center divide-y md:divide-y-0 md:divide-x divide-slate-200/70 rounded-[24px] border border-slate-200/70 bg-white/92 shadow-[0_24px_70px_rgba(15,23,42,0.14)] backdrop-blur-xl">
+      {/* Animated Stats Bar */}
+      <div ref={statsRef} className="relative z-10 w-full bg-white border-b border-slate-100">
+        <div className={`max-w-5xl mx-auto -mt-14 px-6 pb-10 flex flex-col md:flex-row items-center justify-center divide-y md:divide-y-0 md:divide-x divide-slate-200/70 rounded-[24px] border border-slate-200/70 bg-white/92 shadow-[0_24px_70px_rgba(15,23,42,0.14)] backdrop-blur-xl transition-all duration-1000 transform ${statsVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
           {stats.map(({ value, label }) => (
-            <div key={label} className="flex-1 flex flex-col items-center text-center py-6 px-6">
-              <p className="text-3xl font-black text-[#15155f]">{value}</p>
-              <p className="text-xs font-bold uppercase tracking-[0.16em] text-slate-500 mt-2">{label}</p>
-            </div>
+            <AnimatedStat key={label} value={value} label={label} trigger={statsVisible} />
           ))}
         </div>
       </div>
 
-      {/* 3. Our Mentor (Nisha Peshin) */}
+      {/* Our Mentor (Nisha Peshin) */}
       <section ref={nishaRef} className="w-full bg-[#fcf8f2] pb-16 md:pb-24 border-b border-gray-200/50 overflow-hidden">
         <div className={`max-w-7xl mx-auto px-6 pt-12 transition-all duration-1000 transform ${nishaVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}`}>
           <div className="inline-block bg-white border border-gray-200 shadow-md rounded-2xl p-6 md:p-8 min-w-[280px] sm:min-w-[340px]">
@@ -264,8 +258,6 @@ export default function Hero() {
           </div>
         </div>
       </section>
-
-    
     </>
   );
 }
