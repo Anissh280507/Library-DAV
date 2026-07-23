@@ -38,7 +38,7 @@ const FEATURES = [
   { id: 'quiz', icon: Target, title: 'Quiz Generator', desc: 'Make MCQs, true or false, and answer keys for revision.', accent: 'from-orange-500 to-amber-500', component: GenerateQuiz },
   { id: 'vocabulary', icon: Keyboard, title: 'Vocabulary', desc: 'Meanings, synonyms, antonyms, and library examples.', accent: 'from-rose-500 to-pink-500', component: VocabularyHelper },
   { id: 'readingChallenge', icon: Star, title: 'Reading Challenge', desc: 'Build a fun 7-day plan for stronger reading habits.', accent: 'from-yellow-500 to-lime-500', component: ReadingChallenge },
-  { id: 'librarian', icon: HelpCircle, title: 'Ask Librarian', desc: 'Ask about themes, morals, characters, or reading doubts.', accent: 'from-violet-500 to-fuchsia-500', component: AskLibrarian },
+  //{ id: 'librarian', icon: HelpCircle, title: 'Ask Librarian', desc: 'Ask about themes, morals, characters, or reading doubts.', accent: 'from-violet-500 to-fuchsia-500', component: AskLibrarian },
 ];
 
 const quickHelp = [
