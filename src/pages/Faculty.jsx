@@ -52,7 +52,7 @@ const MENTORS = [
   {
     name: "Dr. Nisha Peshin",
     role: "Director",
-    subtitle: "Public Schools, DAV CMC",
+    subtitle: "DAV Public Schools, CMC",
     img: imgNishaPeshin,
   },
     {
