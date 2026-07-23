@@ -56,17 +56,18 @@ const MENTORS = [
     img: imgNishaPeshin,
   },
     {
-    name: "Ms. Jayashree Khandekar",
-    role: "Manager",
-    subtitle: "Principal, DAV Public School Pune",
-    img: imgJayashree,
-  },
-  {
     name: "Ms. Seema Maindiratta",
     role: "ARO - Zone A",
     subtitle: "Principal, DAV Public School Kharghar",
     img: imgSeemaMaindiratta,
   },
+    {
+    name: "Ms. Jayashree Khandekar",
+    role: "Manager",
+    subtitle: "Principal, DAV Public School Pune",
+    img: imgJayashree,
+  },
+
 
 ];
 
