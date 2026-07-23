@@ -75,3 +75,98 @@ export default function DonatedBooks() {
         </div>
       </header>
 
+      {/* Narrative Presentation Flow */}
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 py-12">
+        {/* Tight-Packing Zero-Space Masonry Gallery */}
+        <div className="columns-1 sm:columns-2 lg:columns-4 gap-6 space-y-6">
+          {donors.map((donor, i) => (
+            <div
+              key={i}
+              onClick={() => setLightbox(i)}
+              className="break-inside-avoid relative overflow-hidden bg-white rounded-2xl border border-slate-200/60 shadow-sm transition-all duration-300 hover:scale-[1.015] hover:border-indigo-400/80 hover:shadow-md cursor-pointer group p-3 flex flex-col gap-3"
+            >
+              {/* Photo Frame Container (Preserving Natural Image Ratio) */}
+              <div className="relative overflow-hidden rounded-xl bg-slate-50">
+                <img
+                  src={donor.img}
+                  alt={donor.name}
+                  className="w-full h-auto block object-contain object-top"
+                  loading="lazy"
+                  onError={e => { e.currentTarget.style.display = "none"; }}
+                />
+              </div>
+              
+              {/* Clean Minimal Info Tag */}
+              <div className="px-2 py-1 flex items-center justify-between mt-auto">
+                <div className="flex items-center gap-2">
+                  <div className="w-2 h-2 rounded-full bg-rose-400 fill-rose-400" />
+                  <p className="text-sm font-bold tracking-tight text-slate-800 leading-snug group-hover:text-indigo-600 transition-colors">
+                    {donor.name}
+                  </p>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </main>
+
+      {/* Accessible Immersive Lightbox Modal */}
+      {lightbox !== null && (
+        <div
+          className="fixed inset-0 z-50 bg-slate-950/96 backdrop-blur-md flex flex-col items-center justify-center p-4 select-none"
+          onClick={() => setLightbox(null)}
+          role="dialog"
+          aria-modal="true"
+        >
+          {/* Top Frame Status Control Strip */}
+          <div className="absolute top-0 inset-x-0 p-5 flex justify-between items-center text-slate-400 z-10 bg-slate-950/40 backdrop-blur-sm border-b border-slate-900">
+            <div className="text-xs uppercase tracking-widest font-medium text-slate-200 flex items-center gap-2">
+              <Heart size={14} className="text-rose-400 fill-rose-400" />
+              Donor Focus <span className="text-slate-700 px-1">/</span> {donors[lightbox].name}
+            </div>
+            <button
+              className="text-slate-400 hover:text-white bg-slate-900 border border-slate-800 rounded-xl p-2 transition-all"
+              onClick={() => setLightbox(null)}
+            >
+              <X size={16} />
+            </button>
+          </div>
+
+          {/* Left Navigation Command */}
+          <button
+            className="absolute left-4 z-10 text-slate-400 hover:text-white bg-slate-900/60 border border-slate-800 rounded-xl p-3 transition-all"
+            onClick={(e) => { e.stopPropagation(); prev(); }}
+          >
+            <ChevronLeft size={20} />
+          </button>
+
+          {/* Core Content Presentation Block */}
+          <div className="relative max-h-[75vh] max-w-[85vw] flex flex-col items-center justify-center gap-4">
+            <img
+              src={donors[lightbox].img}
+              alt={donors[lightbox].name}
+              className="max-h-[70vh] max-w-[85vw] rounded-xl shadow-2xl border border-slate-800 object-contain"
+            />
+            <div className="inline-flex items-center gap-2 text-white bg-slate-900/80 border border-slate-800 px-4 py-2 rounded-xl backdrop-blur-sm">
+              <Heart size={14} className="text-rose-400 fill-rose-400" />
+              <span className="font-bold text-xs sm:text-sm tracking-wide">{donors[lightbox].name}</span>
+            </div>
+          </div>
+
+          {/* Right Navigation Command */}
+          <button
+            className="absolute right-4 z-10 text-slate-400 hover:text-white bg-slate-900/60 border border-slate-800 rounded-xl p-3 transition-all"
+            onClick={(e) => { e.stopPropagation(); next(); }}
+          >
+            <ChevronRight size={20} />
+          </button>
+
+          {/* Simple Structural Position Metric */}
+          <div className="absolute bottom-6 text-[11px] tracking-widest font-mono text-slate-400 bg-slate-900/40 backdrop-blur-sm px-3 py-1 rounded-full border border-slate-800/80">
+            {lightbox + 1} / {donors.length}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}

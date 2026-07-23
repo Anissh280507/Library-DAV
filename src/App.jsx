@@ -27,7 +27,6 @@ function Home() {
       <NewArrivalsSlider />
       <LibraryServices />
       <CirculationPolicy />
-      <DonatedBooks />
     </>
   );
 }
