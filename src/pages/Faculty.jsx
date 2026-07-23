@@ -1,8 +1,14 @@
 import { useState, useMemo } from "react";
 
 // ==========================================
-// 1. ASSET IMPORTS (Fix these to match your exact filenames!)
+// 1. ASSET IMPORTS
 // ==========================================
+// Mentors
+import imgPunamSuri from "../assets/Faculty/Punam Suri.png";
+import imgNishaPeshin from "../assets/Faculty/Nisha Peshin.jpeg";
+import imgSeemaMaindiratta from "../assets/Faculty/Seema.jpg";
+
+// Faculty
 import imgAkshadaSonawane from "../assets/Faculty/Akshada Sonawane.jpeg";
 import imgAnitaPatil from "../assets/Faculty/Anita Patil.jpeg";
 import imgChitraShinde from "../assets/Faculty/Chitra Shinde.jpeg";
@@ -35,6 +41,27 @@ import imgSumanPradhan from "../assets/Faculty/Suman Pradhan.jpeg";
 // ==========================================
 // 2. CONFIGURATION CONSTANTS
 // ==========================================
+const MENTORS = [
+  {
+    name: "Shri Punam Suri",
+    role: "President",
+    subtitle: "DAV College Managing Committee",
+    img: imgPunamSuri,
+  },
+  {
+    name: "Dr. Nisha Peshin",
+    role: "Director",
+    subtitle: "Public Schools, DAV CMC",
+    img: imgNishaPeshin,
+  },
+  {
+    name: "Ms. Seema Maindiratta",
+    role: "ARO - Zone A",
+    subtitle: "DAV Public Schools",
+    img: imgSeemaMaindiratta,
+  },
+];
+
 const STATS = [
   { value: "27+", label: "Faculty Members" },
   { value: "9+", label: "Departments" },
@@ -121,18 +148,19 @@ export default function Faculty() {
   }, [activeFilter, searchQuery]);
 
   return (
-    <div className="min-h-screen bg-[#f8fafc] text-slate-800 antialiased font-sans">
-      {/* Header section with refined typography */}
-      <header className="bg-gradient-to-r from-[#1e40af] to-[#1d4ed8] px-6 py-14 text-white text-center shadow-sm">
-        <div className="max-w-6xl mx-auto">
-          <h1 className="text-3xl md:text-5xl font-black tracking-tight mb-2">
-            Meet Our Faculty
-          </h1>
-          <p className="text-blue-100 opacity-90 text-sm md:text-base font-medium max-w-xl mx-auto">
-            Library Committee 2026–27 · DAV Public School, Airoli
-          </p>
-        </div>
-      </header>
+    <div className="min-h-screen bg-[#f8fafc] text-slate-800 antialiased font-sans pb-16">
+      {/* Header section */}
+{/* Header section with centered title and subtitle */}
+<header className="bg-gradient-to-r from-[#1e40af] to-[#1d4ed8] px-6 py-14 text-white text-center shadow-sm">
+  <div className="max-w-6xl mx-auto flex flex-col items-center justify-center text-center">
+    <h1 className="text-3xl md:text-5xl font-black tracking-tight mb-2 text-center w-full">
+      Meet Our Team
+    </h1>
+    <p className="text-blue-100 opacity-90 text-sm md:text-base font-medium max-w-xl mx-auto text-center w-full">
+      Library Committee 2026–27 · DAV Public School, Airoli
+    </p>
+  </div>
+</header>
 
       {/* Structured Stats Section */}
       <section className="max-w-5xl mx-auto px-4 -mt-8" aria-label="Statistics">
@@ -146,8 +174,55 @@ export default function Faculty() {
         </div>
       </section>
 
+      {/* Our Mentors Section */}
+      <section className="max-w-6xl mx-auto px-6 mt-16" aria-label="Mentors">
+        <div className="text-center mb-8">
+          <h2 className="text-2xl md:text-3xl font-black tracking-tight text-slate-900">
+            Our Mentors
+          </h2>
+          <div className="w-12 h-1 bg-[#1d4ed8] mx-auto mt-2 rounded-full"></div>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+          {MENTORS.map((mentor) => (
+            <div
+              key={mentor.name}
+              className="bg-white rounded-2xl border-2 border-slate-900/10 shadow-sm hover:shadow-md transition-all duration-200 p-6 flex flex-col items-center text-center group"
+            >
+              <div className="w-28 h-28 rounded-full overflow-hidden bg-slate-100 flex items-center justify-center mb-4 ring-4 ring-slate-50 group-hover:ring-[#1d4ed8]/20 transition-all flex-shrink-0">
+                <img
+                  src={mentor.img}
+                  alt={mentor.name}
+                  className="w-full h-full object-cover object-top"
+                  onError={(e) => {
+                    e.target.style.display = "none";
+                  }}
+                />
+              </div>
+              <h3 className="font-bold text-lg text-slate-900 tracking-tight">
+                {mentor.name}
+              </h3>
+              <p className="text-[#1d4ed8] text-sm font-black mt-1 uppercase tracking-wider">
+                {mentor.role}
+              </p>
+              <p className="text-xs font-semibold text-slate-500 mt-1">
+                {mentor.subtitle}
+              </p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <hr className="max-w-6xl mx-auto my-12 border-slate-200" />
+
       {/* Control Actions: Search Input & Category Filters */}
-      <section className="max-w-6xl mx-auto px-6 mt-10 space-y-5" aria-label="Controls">
+      <section className="max-w-6xl mx-auto px-6 space-y-5" aria-label="Controls">
+        <div className="text-center mb-2">
+          <h2 className="text-2xl md:text-3xl font-black tracking-tight text-slate-900">
+            Faculty Directory
+          </h2>
+        </div>
+
         <div className="relative max-w-3xl mx-auto shadow-sm rounded-xl">
           <span className="absolute inset-y-0 left-0 flex items-center pl-3.5 pointer-events-none">
             <svg className="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
@@ -184,7 +259,7 @@ export default function Faculty() {
       </section>
 
       {/* Grid Directory Layout */}
-      <main className="max-w-6xl mx-auto px-6 py-12">
+      <main className="max-w-6xl mx-auto px-6 py-8">
         {filteredFaculty.length > 0 ? (
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-5">
             {filteredFaculty.map((person) => {
@@ -215,21 +290,21 @@ export default function Faculty() {
                     )}
                   </div>
 
-              {/* Profile Typography: Absolute Black Text Inlines */}
-<h2 
-  style={{ color: '#000000' }} 
-  className="font-bold text-[7px] tracking-tight leading-snug min-h-[2rem] flex items-center justify-center w-full"
->
-  {person.name}
-</h2>
+                  {/* Profile Typography */}
+                  <h3 
+                    style={{ color: '#000000' }} 
+                    className="font-bold text-[13px] tracking-tight leading-snug min-h-[2rem] flex items-center justify-center w-full"
+                  >
+                    {person.name}
+                  </h3>
 
-<p className="text-[#1d4ed8] text-[15px] font-black mt-0.5 tracking-wider uppercase">
-  {person.role}
-</p>
+                  <p className="text-[#1d4ed8] text-[12px] font-black mt-0.5 tracking-wider uppercase">
+                    {person.role}
+                  </p>
                   
                   {/* Shift Badge Indicator */}
-                  <div className="mt-4 w-full bg-slate-50 group-hover:bg-blue-60/70 rounded-xl px-2 py-1.5 border border-slate-100/80 transition-colors">
-                    <span className="text-[13px] font-bold text-slate-500">
+                  <div className="mt-4 w-full bg-slate-50 group-hover:bg-blue-50/70 rounded-xl px-2 py-1.5 border border-slate-100/80 transition-colors">
+                    <span className="text-[11px] font-bold text-slate-500">
                       {getDeptLabel(person.dept)}
                     </span>
                   </div>
